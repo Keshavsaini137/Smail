@@ -80,7 +80,7 @@ public class Users {
 	}
 
 	public void setPassword(String password) {
-		this.password = "{noop}" + password;
+		this.password = password;
 	}
 
 	public Users(String username, String password) {

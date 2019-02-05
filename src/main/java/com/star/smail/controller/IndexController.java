@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,8 +65,7 @@ public class IndexController {
 	
 	@PostMapping("/processForm")
 	public String processForm(@Valid @ModelAttribute("theUsers") Users theUsers,
-							BindingResult bindingResult,
-							@RequestParam("username") String username) {
+							BindingResult bindingResult) {
 		System.out.println(bindingResult);
 		
 		
@@ -74,7 +74,8 @@ public class IndexController {
 			return "create-account";
 		}
 		else {
-			userExist = userService.isUserExist(username);
+			userExist = userService.isUserExist(theUsers.getUsername());
+			System.out.println("" + theUsers.getUsername());
 			
 			if(userExist) {
 				
@@ -87,7 +88,7 @@ public class IndexController {
 				System.out.println(authorities.toString());
 				authService.saveAuthorities(authorities);
 				userService.saveUser(theUsers);
-				return "redirect:login";
+				return "redirect:/";
 			}
 		}
 		
