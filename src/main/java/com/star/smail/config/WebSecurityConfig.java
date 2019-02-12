@@ -20,6 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource);
+			//.usersByUsernameQuery(Select firstName,lastname,username)
+			
+		//.dataSource(dataSource);
 	}
 	
 	

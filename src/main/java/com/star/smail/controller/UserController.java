@@ -117,6 +117,16 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/showMail")
+	public String showMail(@RequestParam("mailId") Long mailId, Model model) {
+		
+		Mail theMail = mailService.showMail(mailId);
+		
+		model.addAttribute("mail", theMail);
+		
+		return "show-mail";
+	}
+	
 }
 
 

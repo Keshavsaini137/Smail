@@ -9,5 +9,7 @@ public interface MailService {
 	public void sendMail(Mail mail);
 	
 	public List<Mail> showMails(String username);
+
+	public Mail showMail(Long mailId);
 	
 }

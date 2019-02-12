@@ -25,6 +25,14 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
+	<script>
+		$(document).ready(function(){
+			$("#tr").click(function(){
+				$("p").hide();
+			});
+		});
+	</script>
+
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
@@ -73,13 +81,21 @@
 		<div class="col" style="margin-top:5rem">
 			<table class="table table-secondary table-hover table-responsive-sm">
 				<c:forEach var="tempMail" items="${mails}">
-					<tr>
-						<td>${tempMail.senderUsername}</td>
+					
+					<c:url var="openMail" value="/user/showMail">
+						<c:param name="mailId" value="${tempMail.id}"></c:param>
+					</c:url>
+				
+					<tr onClick="location.href='${openMail}'">
+						<td> <c:out value="${j}" /> </td>
+						<td>${tempMail.senderUsername} </td>
 						<td>${tempMail.subject } - ${tempMail.detail}</td>
 						<td>${tempMail.date}</td>
 					</tr>
+					
 				</c:forEach>
 			</table>	
+			
 		</div>
 		<div class="col-2 col-sm-0"></div>
 	</div>

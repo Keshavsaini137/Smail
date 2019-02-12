@@ -3,6 +3,7 @@ package com.star.smail.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,9 +11,9 @@ import javax.validation.constraints.Size;
 @Entity
 public class Users {
 	
-	//@Id
+	@Id
 	//@Column(unique=true)
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
 	@NotNull(message="is required")
@@ -23,7 +24,7 @@ public class Users {
 	//@Size(min=1)
 	private String lastName;
 	
-	@Id
+	//@Id
 	@Column(nullable=false)
 	@NotNull(message="is required")
 	@Size(min=3, message="is required")

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,18 @@ public class MailServiceImpl implements MailService{
 		return mails;
 	}
 	
+	@Override
+	public Mail showMail(Long mailId) {
+		Optional<Mail> theMail = mailRepo.findById(mailId);
+		if(theMail.isPresent()) {
+			Mail mail = theMail.get();
+			return mail;
+		}
+		else {
+			return new Mail();
+		}
+		
+	}
 	
 	
 	private Date getCurrentDate() {
@@ -44,5 +57,7 @@ public class MailServiceImpl implements MailService{
 		//Date date = new SimpleDateFormat("yyyy-MM-dd").parse(lDate.toString());
 		return date;
 	}
+
+	
 	
 }
