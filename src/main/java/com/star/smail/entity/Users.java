@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,16 +25,19 @@ public class Users {
 	//@Size(min=1)
 	private String lastName;
 	
-	//@Id
-	@Column(nullable=false)
+	//@Column(nullable=false)
 	@NotNull(message="is required")
 	@Size(min=3, message="is required")
 	private String username;
 	
-	@Column(nullable=false)
+	//@Column(nullable=false)
 	@NotNull(message="is required")
 	@Size(min=6, message="is required")
 	private String password;
+	
+	@NotNull(message="is required")
+	@Transient
+	private String confirmPassword;
 	
 	@Column(nullable=false,length=5)
 	private byte enabled = 1;
@@ -44,6 +48,20 @@ public class Users {
 		
 	}
 	
+	
+	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+
+
 	public String getFirstName() {
 		return firstName;
 	}

@@ -86,6 +86,9 @@
 				</div>
 				<div class="form-group">
 					<form:button class="btn btn-primary mx-3" type="submit">Send</form:button>
+					<form:button class="btn btn-danger mx-3 float-right"
+								 type="button" 
+								 onClick="location.href='/user/inbox'">Cancel</form:button>
 				</div>
 			</form:form>
 		</div>

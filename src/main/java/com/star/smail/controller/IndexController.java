@@ -30,6 +30,7 @@ public class IndexController {
 	AuthoritiesService authService;
 	
 	boolean userExist = false;
+	boolean isPasswordMatch = false;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -53,7 +54,12 @@ public class IndexController {
 	@GetMapping("/createAccount")
 	public String createAccount(Model model) {
 		
-		System.out.println(userExist);
+		//System.out.println(isPasswordMatch);
+		if(isPasswordMatch) {
+			model.addAttribute("theConfirmPassword", "The password does not match with confirm password");
+		}
+		
+		//System.out.println(userExist);
 		if(userExist) {
 			model.addAttribute("theUserExist", "Use different Username, Cause this one Already Exist!");
 		}
@@ -73,24 +79,34 @@ public class IndexController {
 			System.out.println("Null Error");
 			return "create-account";
 		}
-		else {
-			userExist = userService.isUserExist(theUsers.getUsername());
-			System.out.println("" + theUsers.getUsername());
-			
-			if(userExist) {
-				
-				System.out.println("User Already Exist" + userExist);
-				return "redirect:createAccount?userExist";
-			}
-			else {
-				Authorities authorities = new Authorities();
-				authorities.setUsername(theUsers.getUsername());
-				System.out.println(authorities.toString());
-				authService.saveAuthorities(authorities);
-				userService.saveUser(theUsers);
-				return "redirect:/";
-			}
+		
+		//Checking if the password match with the Confirm Password.
+		isPasswordMatch = theUsers.getConfirmPassword().equals(theUsers.getPassword());
+		
+		if(!isPasswordMatch) {
+			return "redirect:createAccount?isPasswordMatch";
 		}
+		
+		//Checking if the user is already exist in the database.
+		userExist = userService.isUserExist(theUsers.getUsername());
+		System.out.println("" + theUsers.getUsername());
+		
+		if(userExist) {
+			System.out.println("User Already Exist" + userExist);
+			return "redirect:createAccount?userExist";
+		}
+		
+		//Creating new user and redirecting to home page
+		
+		//Adding "@smail.com" at end of the username.
+		theUsers.setUsername(theUsers.getUsername() + "@smail.com");
+		
+		Authorities authorities = new Authorities();
+		authorities.setUsername(theUsers.getUsername());
+		System.out.println(authorities.toString());
+		authService.saveAuthorities(authorities);
+		userService.saveUser(theUsers);
+		return "redirect:/";
 		
 	}
 	

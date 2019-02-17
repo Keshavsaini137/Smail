@@ -68,8 +68,8 @@
 					</c:if>
 				</div>
 				<div class="form-group">
-					<label> Username </label>
-					<input type="text" class="form-control shadow-sm mb-4" name="username" placeholder="username" />
+					<label> Email </label>
+					<input type="text" class="form-control shadow-sm mb-4" name="username" placeholder="Email" />
 				</div>
 				<div class="form-group">
 					<label> Password </label> 

@@ -26,10 +26,12 @@ public class UserServiceImpl implements UserService {
 		String encodedPassword = passwordEncoder.encode(password);
 		user.setPassword(encodedPassword);
 		System.out.println("|" + passwordEncoder.encode(password) + "|");
+		
 		userRepo.save(user);
 	}
 
 	@Override
+	@Transactional
 	public boolean isUserExist(String username) {
 		boolean isExist = userRepo.existsByUsername(username);
 		return isExist;

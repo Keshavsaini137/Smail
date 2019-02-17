@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<html>
+<html xmlns="https://thymeleaf.org">
 <head>
 	<title>Sign In</title>
 	
@@ -37,7 +37,7 @@
 		<a class="navbar-brand" href="/">Smail</a>
 		<ul class="navbar-nav">
 			<li class="nav-item active">
-				<a class="nav-link" href="/"">HOME</a>
+				<a class="nav-link" href="/">HOME</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
@@ -64,6 +64,9 @@
 				<div class="form-group">
 					<i style="color:red">${theUserExist} </i>
 				</div>
+				<div class="form-group">
+					<i style="color:red">${theConfirmPassword} </i>
+				</div>
 				
 				<div class="row">
 					
@@ -82,8 +85,13 @@
 					 
 					 
 				<div class="form-group">
-				 	 <label>Username  </label> 
-					 <form:input type="text" class="form-control" name="username" path="username" /> 
+				 	 <label>Username  </label>
+				 	 <div class="input-group"> 
+						 <form:input type="text" class="form-control" name="username" path="username" />
+						 <div class="input-group-append">
+					        <span class="input-group-text">@smail.com</span>
+					     </div>
+					 </div>
 					 <form:errors  path="username" cssClass="error"/>
 				</div>
 				<div class="row">
@@ -95,7 +103,8 @@
 					 
 					 <div class="col form-group">
 					 <label>Confirm </label> 
-					 <input type="text" class="form-control" name="confirmPassword" /> 
+					 <form:input type="text" class="form-control" name="confirmPassword" path="confirmPassword" /> 
+					 <form:errors path="confirmPassword" cssClass="error"></form:errors>
 					 </div>
 				</div>
 					 

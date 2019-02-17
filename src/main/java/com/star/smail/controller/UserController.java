@@ -29,16 +29,15 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	@Autowired
+	AuthoritiesService authService;
+	@Autowired
+	MailService mailService;
 	
 	public String logedInUsername;
 	boolean userNotFound = true;
 	boolean isMailSent = false;
 	
-	@Autowired
-	AuthoritiesService authService;
-	
-	@Autowired
-	MailService mailService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -77,8 +76,10 @@ public class UserController {
 		
 		if(!userNotFound) {
 			model.addAttribute("theUserNotFound", "There is no such user");
+			userNotFound = true;
 			System.out.println("there no user");
 		}
+		
 		System.out.println("" + userNotFound);
 		
 		Mail mail = new Mail();
@@ -98,23 +99,20 @@ public class UserController {
 			System.out.println("Null Mail Error");
 			return "compose";
 		}
-		else {
-			userNotFound = userService.isUserExist(recevierUsername);
-			
-			if(userNotFound) {
-				//add date and sender name 
-				String _logedInUserName = logedInUsername; 
-				isMailSent = userNotFound;
-				theMail.setSenderUsername(_logedInUserName);
-				mailService.sendMail(theMail);
-				return "redirect:/user/inbox";
-			}
-			else {
-				//System.out.println("There is no such User");
-				
-				return "redirect:/user/compose?userNotFound";
-			}
+		
+		userNotFound = userService.isUserExist(recevierUsername);
+		
+		if(!userNotFound) {
+			//System.out.println("There is no such User");
+			return "redirect:/user/compose?userNotFound";
 		}
+		
+		//add date and sender name 
+		String _logedInUserName = logedInUsername; 
+		isMailSent = userNotFound;
+		theMail.setSenderUsername(_logedInUserName);
+		mailService.sendMail(theMail);
+		return "redirect:/user/inbox";
 	}
 	
 	@RequestMapping("/showMail")
